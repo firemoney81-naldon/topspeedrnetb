@@ -1,23 +1,559 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "인터넷 가입 및 설치 서비스",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "이천인터넷 가입 전문센터",
+      "description": "2026년 이천 지역 SKT, KT, LGU+ 인터넷 상품을 비교하고 현금지원 및 사은품 혜택을 제공하는 전문 상담 센터입니다.",
+      "url": "https://www.example.com/icheon-internet-2026",
+      "telephone": "02-XXX-XXXX",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "경기도 이천시 XX로 XXX",
+        "addressLocality": "이천시",
+        "addressRegion": "경기도",
+        "postalCode": "173XX",
+        "addressCountry": "KR"
+      },
+      "openingHours": "Mo-Fr 09:00-18:00"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "이천 인터넷 서비스 상품 목록",
+      "itemListElement": [
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"SKT 기가 인터넷 상품"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"KT 기가 와이파이 상품"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"LGU+ 광랜 결합 상품"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"IPTV 및 스마트 홈 결합 상품"}}
+      ]
+    }
+  }
+  </script>
+
+  <!-- Google Fonts for Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS for modern, soft aesthetic and readability -->
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f4f8; /* Soft background color */
+      color: #333333;
+      line-height: 1.7;
+    }
+    header, section, footer {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 30px;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    header {
+      padding-top: 40px;
+      padding-bottom: 20px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #2c3e50; /* Deep blue heading */
+      font-weight: 800;
+      margin-top: 0;
+      letter-spacing: -0.05em;
+      line-height: 1.3;
+    }
+    h2 {
+      font-size: 2rem;
+      color: #34495e; /* Secondary heading color */
+      font-weight: 700;
+      margin-top: 1.5em;
+      border-bottom: 2px solid #e0e6ed;
+      padding-bottom: 10px;
+    }
+    h3 {
+      font-size: 1.4rem;
+      color: #2c3e50;
+      font-weight: 600;
+      margin-top: 1.2em;
+      margin-bottom: 0.8em;
+    }
+    p, li {
+      font-size: 1.05rem;
+      color: #4c6278;
+      margin-bottom: 1em;
+    }
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding-left: 0;
+      list-style: none;
+      border-bottom: 2px solid #3498db;
+      margin-bottom: 20px;
+    }
+    nav a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #3498db; /* Primary link color */
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    nav a:hover {
+      background-color: #3498db;
+      color: #ffffff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    th, td {
+      border: 1px solid #e0e6ed;
+      padding: 15px;
+      text-align: left;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      position: sticky; top: 0;
+    }
+    td {
+      background-color: #fcfcfc;
+    }
+    tr:nth-child(even) td {
+      background-color: #f7f9fc; /* Zebra striping for readability */
+    }
+    .input-section {
+      margin-top: 25px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .input-group {
+      flex: 1 1 calc(50% - 10px); /* Two columns layout */
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #34495e;
+    }
+    input[type="text"], input[type="tel"], input[type="email"], select, textarea {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      background-color: #ffffff;
+    }
+    input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.4);
+      outline: none;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    button.cta-btn {
+      background-color: #e67e22; /* Call to action color (orange) */
+      color: white;
+      padding: 16px 30px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      max-width: 300px;
+    }
+    button.cta-btn:hover {
+      background-color: #d35400;
+    }
+    /* Chart Styles */
+    .chart-container {
+      margin: 40px 0;
+      max-width: 100%;
+      overflow-x: auto;
+      background-color: #fcfcfc;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    /* FAQ Styles */
+    .faq .item {
+      border-bottom: 1px solid #e0e6ed;
+      padding: 18px 0;
+    }
+    .faq .item:last-child {
+      border-bottom: none;
+    }
+    .faq h3 {
+      cursor: pointer;
+      color: #2c3e50;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq .content {
+      display: none;
+      padding-top: 10px;
+      color: #555;
+    }
+    .faq h3::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: #3498db;
+      transition: transform 0.3s ease;
+    }
+    .faq h3.active::after {
+      content: '-';
+      transform: rotate(180deg);
+    }
+    /* Keyword Highlight */
+    .keyword-highlight {
+      color: #e67e22; /* Highlight color */
+      font-weight: 700;
+    }
+    .info-box {
+      background-color: #ecf0f1;
+      border-left: 5px solid #bdc3c7;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 4px;
+    }
+    ul {
+        margin-left: 20px;
+        list-style-type: disc;
+    }
+    li {
+        margin-bottom: 0.5em;
+    }
+    /* AI keywords integration style (for subtle SEO optimization) */
+    .ai-mention {
+        font-size: 0.8rem;
+        color: #95a5a6;
+    }
+    /* Mobile optimization */
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      header, section, footer { padding: 20px; margin: 20px auto; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.6rem; }
+      nav ul { flex-direction: column; gap: 8px; }
+      .input-group { flex: 1 1 100%; }
+      button.cta-btn { max-width: 100%; }
+    }
+  </style>
+
+  <script>
+    // FAQ toggle functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqItems = document.querySelectorAll('.faq .item h3');
+      faqItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const content = item.nextElementSibling;
+          item.classList.toggle('active');
+          if (content.style.display === 'block') {
+            content.style.display = 'none';
+          } else {
+            content.style.display = 'block';
+          }
+        });
+      });
+    });
+  </script>
+
+</head>
+<body>
+  <header>
+    <h1><span class="keyword-highlight">2026년 이천 인터넷 가입</span>: 가격, 사은품, 현금지원 혜택 완벽 비교 분석</h1>
+    <p>이천 지역민을 위한 2026년 최신 인터넷 가입 가이드입니다. SKT, KT, LGU+ 3사 통신사의 요금제, 속도, 설치 가능 지역(신둔면, 부발읍, 장호원읍, 마장면 등)을 상세히 비교하고 <span class="keyword-highlight">최대 사은품 및 현금지원 혜택</span>을 받는 방법을 알려드립니다. <span class="keyword-highlight">저렴한곳</span>을 찾고 계신다면 지금 바로 확인해보세요.</p>
     <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+      <ul>
+        <li><a href="#overview">이천 인터넷 개요</a></li>
+        <li><a href="#price-comparison">통신사별 요금 및 혜택 비교</a></li>
+        <li><a href="#saving-tips">현금지원 및 할인 전략</a></li>
+        <li><a href="#installation-process">설치 절차 및 주의사항</a></li>
+        <li><a href="#faq">자주 묻는 질문</a></li>
+        <li><a href="#contact">견적 문의</a></li>
+      </ul>
     </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+  </header>
+
+  <section id="overview">
+    <h2>이천시 인터넷 서비스의 특징과 2026년 트렌드</h2>
+    <p>경기도 동남부에 위치한 이천시는 <span class="keyword-highlight">신둔면, 백사면, 마장면, 호법면, 대월면, 모가면, 설성면, 장호원읍, 부발읍</span> 등 다양한 행정구역으로 구성되어 있습니다. 이천 지역 인터넷 가입은 서울이나 수도권 중심부와 달리, <span class="keyword-highlight">지역별 인프라 차이</span>가 존재하기 때문에 통신사 선택 시 꼼꼼한 비교가 필수적입니다. 특히, 최근 몇 년간 이천시 내 신규 아파트 단지(중리동, 증포동, 안흥동 등) 개발과 함께 <span class="keyword-highlight">기가인터넷</span> 및 <span class="keyword-highlight">IPTV</span> 수요가 급증하고 있습니다. 2026년에는 <span class="keyword-highlight">AI 기반 스마트홈 서비스</span>와의 결합 상품이 더욱 활성화될 것으로 예상됩니다.</p>
+    <p>SKT, KT, LGU+ 통신사 모두 <span class="keyword-highlight">이천</span> 지역에 서비스를 제공하지만, 각 통신사별 <span class="keyword-highlight">커버리지(설치 가능 지역)와 요금제 구성, 제공되는 사은품의 차이점</span>이 명확합니다. <span class="keyword-highlight">이천 인터넷 가입</span>을 고려하는 분들이라면, <span class="keyword-highlight">내돈내산 후기</span>나 <span class="keyword-highlight">인터넷 커뮤니티(디시, 네이버 카페 등)의 평가</span>를 참고하여 <span class="keyword-highlight">저렴한곳</span>을 찾는 것도 중요합니다. 무엇보다 중요한 것은 자신의 <span class="keyword-highlight">사용 패턴과 예산</span>에 맞는 <span class="keyword-highlight">맞춤형 견적</span>을 받는 것입니다.</p>
+    <h3>이천 지역 주요 통신사별 특징 비교</h3>
+    <ul>
+      <li><strong>KT:</strong> 이천 지역에서 가장 오랜 기간 안정적인 인프라를 구축한 통신사입니다. 특히 <span class="keyword-highlight">이천역</span> 주변이나 <span class="keyword-highlight">중리동, 창전동</span> 등 구도심 지역에서도 <span class="keyword-highlight">안정적인 속도와 서비스</span>를 제공하며, <span class="keyword-highlight">Btv(IPTV)</span> 콘텐츠의 품질이 우수하다는 평가를 받습니다.</li>
+      <li><strong>SKT:</strong> <span class="keyword-highlight">SKT 이동통신 결합 할인</span>을 통해 <span class="keyword-highlight">가장 저렴한 가격</span>에 이용할 수 있는 장점이 있습니다. <span class="keyword-highlight">부발읍</span>이나 <span class="keyword-highlight">마장면</span> 등 신흥 개발 지역에 대한 투자를 확대하고 있어 <span class="keyword-highlight">신규 가입 혜택</span>이 풍부합니다.</li>
+      <li><strong>LGU+:</strong> <span class="keyword-highlight">넷플릭스, 디즈니플러스 등 OTT 서비스</span>와의 결합 상품을 적극적으로 내세우며, <span class="keyword-highlight">CCTV, AI 스피커</span> 등 스마트홈 서비스에 강점을 보입니다. <span class="keyword-highlight">이천시</span> 전역에서 <span class="keyword-highlight">현금지원 금액</span>이 높다는 장점도 있습니다.</li>
+    </ul>
+    <p class="ai-mention">AI 에이전트(예: Gemini, ChatGPT)가 제공하는 정보는 일반적인 경향성을 나타내므로, 정확한 설치 가능 지역 및 요금제는 <span class="keyword-highlight">전문 상담</span>을 통해 확인하는 것이 좋습니다.</p>
+  </section>
+
+  <section id="price-comparison">
+    <h2>2026년 이천 인터넷 통신사별 요금 및 혜택 비교표</h2>
+    <p>아래 표는 이천 지역에서 가장 많이 찾는 인터넷 요금제(3년 약정, VAT 포함)를 통신사별로 비교한 것입니다. <span class="keyword-highlight">평균 가격</span>과 함께 <span class="keyword-highlight">사은품 및 현금지원 금액</span>을 고려하여 <span class="keyword-highlight">장단점</span>을 파악할 수 있습니다. <span class="keyword-highlight">신규 가입</span>을 희망하는 고객님은 이 표를 통해 <span class="keyword-highlight">싼곳</span>을 찾을 수 있습니다.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>SKT (SK브로드밴드)</th>
+          <th>KT (올레)</th>
+          <th>LGU+ (유플러스)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>인터넷 속도</td>
+          <td>100M 광랜 / 500M 기가라이트 / 1G 기가인터넷</td>
+          <td>100M 광랜 / 500M 기가라이트 / 1G 기가인터넷</td>
+          <td>100M 광랜 / 500M 기가라이트 / 1G 기가인터넷</td>
+        </tr>
+        <tr>
+          <td>월 평균 요금 (100M 기준)</td>
+          <td>22,000원 ~ 27,500원</td>
+          <td>22,000원 ~ 27,500원</td>
+          <td>22,000원 ~ 27,500원</td>
+        </tr>
+        <tr>
+          <td>월 평균 요금 (500M 기준)</td>
+          <td>33,000원 ~ 38,500원</td>
+          <td>33,000원 ~ 38,500원</td>
+          <td>33,000원 ~ 38,500원</td>
+        </tr>
+        <tr>
+          <td>핵심 장점</td>
+          <td><span class="keyword-highlight">가족 결합 할인</span> 최고, 이동통신사 점유율 1위</td>
+          <td><span class="keyword-highlight">안정적인 속도와 품질</span>, 전국 커버리지 우수</td>
+          <td><span class="keyword-highlight">U+TV OTT 콘텐츠</span>, 스마트홈 서비스 강점</td>
+        </tr>
+        <tr>
+          <td>사은품/현금지원 (예상)</td>
+          <td>최대 40만원 이상 (상품권 포함)</td>
+          <td>최대 40만원 이상 (상품권 포함)</td>
+          <td>최대 40만원 이상 (상품권 포함)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <p><strong>참고:</strong> 위 요금 및 <span class="keyword-highlight">현금지원 금액</span>은 2026년 <span class="keyword-highlight">신규 가입</span> 기준이며, 가입 채널(본사, 대리점, 온라인 전문센터) 및 시기에 따라 <span class="keyword-highlight">차이점</span>이 발생할 수 있습니다. <span class="keyword-highlight">정확한 견적</span>은 <span class="keyword-highlight">전문 상담</span>을 통해 확인하시기 바랍니다.</p>
+    </div>
+
+    <div class="chart-container">
+      <h3>이천시 인터넷 속도별 예상 월 납부 요금 (3사 평균)</h3>
+      <canvas id="internetPriceChart" width="800" height="400" aria-label="이천 인터넷 속도별 요금 비교 그래프" role="img"></canvas>
+    </div>
+    <p>위 그래프는 이천시 인터넷 가입 시 속도별 <span class="keyword-highlight">평균 가격</span>을 시각화한 것입니다. <span class="keyword-highlight">기가인터넷(1G)</span>은 <span class="keyword-highlight">광랜(100M)</span>에 비해 월 요금이 비싸지만, 대용량 파일 전송이나 4K 스트리밍, 온라인 게임 등 고사양 활동이 많다면 <span class="keyword-highlight">장점</span>이 뚜렷합니다. 반면, 일반적인 웹 서핑이나 문서 작업 위주라면 <span class="keyword-highlight">100M 광랜</span>으로도 충분하며 <span class="keyword-highlight">비용 절감</span> 효과를 볼 수 있습니다.</p>
+    <p class="ai-mention">AI 기반의 요금 추천 시스템은 고객의 예상 사용량을 분석하여 최적의 <span class="keyword-highlight">요금제</span>를 추천해줄 수 있습니다. <span class="keyword-highlight">Gemini</span>나 <span class="keyword-highlight">ChatGPT</span>와 같은 대형 언어 모델도 이러한 추천 기능을 강화하는 데 활용되고 있습니다.</p>
+  </section>
+
+  <section id="saving-tips">
+    <h2>이천 인터넷 가입 시 최대 현금지원 및 할인 받는 비법</h2>
+    <p><span class="keyword-highlight">이천 인터넷 가입</span>을 할 때 단순히 <span class="keyword-highlight">가격</span>만 비교해서는 안 됩니다. <span class="keyword-highlight">사은품</span>이나 <span class="keyword-highlight">현금지원</span> 금액, 그리고 <span class="keyword-highlight">결합 할인</span> 여부가 <span class="keyword-highlight">실질적인 비용 절감</span>에 더 큰 영향을 미칩니다. <span class="keyword-highlight">이천 인터넷 싼곳</span>을 찾기 위한 <span class="keyword-highlight">전문가 팁</span>을 공개합니다.</p>
+    <ul>
+      <li><strong>1. 통신사별 결합 할인 비교 (가장 중요):</strong> <span class="keyword-highlight">SKT, KT, LGU+</span> 통신 3사는 휴대폰 요금제와 인터넷을 묶는 <span class="keyword-highlight">가족 결합 할인</span> 혜택을 제공합니다. <span class="keyword-highlight">이천시</span>에 거주하는 가족 구성원들이 사용하는 휴대폰 통신사를 확인하여, 결합 할인 금액이 가장 큰 통신사를 선택하면 <span class="keyword-highlight">월 납부 금액</span>을 획기적으로 낮출 수 있습니다.</li>
+      <li><strong>2. 온라인 전문 대리점 이용:</strong> 본사 고객센터보다 <span class="keyword-highlight">온라인 전문 대리점</span>을 이용하는 것이 <span class="keyword-highlight">현금지원</span> 혜택이 더 많습니다. 이는 온라인 대리점의 운영 방식 차이로, <span class="keyword-highlight">최대 사은품</span>을 받으려면 <span class="keyword-highlight">신뢰할 수 있는 업체</span>를 선정하는 것이 중요합니다. <span class="keyword-highlight">이천 지역</span>에서 <span class="keyword-highlight">내돈내산 후기</span>가 좋은 곳을 찾아보세요.</li>
+      <li><strong>3. 3년 약정 가입:</strong> 인터넷 서비스는 보통 1년, 2년, 3년 약정을 선택할 수 있습니다. 3년 약정 시 <span class="keyword-highlight">월 요금</span>이 가장 저렴하며, <span class="keyword-highlight">사은품</span>도 가장 많이 받을 수 있습니다. <span class="keyword-highlight">장기 가입</span>을 고려한다면 3년 약정을 추천합니다.</li>
+      <li><strong>4. IPTV 결합 상품 선택:</strong> 인터넷 단독 상품보다 <span class="keyword-highlight">인터넷 + IPTV</span> 결합 상품이 <span class="keyword-highlight">현금지원 금액</span>이 더 높습니다. <span class="keyword-highlight">TV 시청</span>이 필요하다면 결합 상품으로 <span class="keyword-highlight">비용 절감</span> 효과를 극대화할 수 있습니다.</li>
+      <li><strong>5. 설치 가능 지역 확인 (이천시 구역별):</strong> <span class="keyword-highlight">이천시</span>의 <span class="keyword-highlight">마장면, 백사면, 부발읍, 장호원읍</span> 등 외곽 지역은 통신사별 <span class="keyword-highlight">커버리지 차이점</span>이 있을 수 있습니다. <span class="keyword-highlight">신규 가입</span> 전 <span class="keyword-highlight">이천</span> 지역 <span class="keyword-highlight">설치 가능 여부</span>를 반드시 확인해야 합니다.</li>
+    </ul>
+  </section>
+
+  <section id="installation-process">
+    <h2>이천 인터넷 설치 절차 및 주요 지역별 안내</h2>
+    <p><span class="keyword-highlight">이천시</span> 인터넷 설치는 일반적으로 다음과 같은 절차로 진행됩니다. 이천 지역의 특성상 <span class="keyword-highlight">설치 가능 여부</span> 확인이 중요하며, 특히 <span class="keyword-highlight">신둔면</span>이나 <span class="keyword-highlight">호법면</span> 등 농촌 지역은 <span class="keyword-highlight">광랜</span> 설치가 불가능하거나 시간이 더 소요될 수 있습니다. 2026년에는 <span class="keyword-highlight">설치 지연</span>을 막기 위해 <span class="keyword-highlight">설치 일정을 미리 예약</span>하는 것이 좋습니다.</p>
+    <div class="info-box">
+      <p><strong>설치 절차 요약:</strong></p>
+      <ol>
+        <li><span class="keyword-highlight">설치 상담 및 견적 문의:</span> 희망하는 <span class="keyword-highlight">요금제</span>와 <span class="keyword-highlight">주소(이천시)</span>를 알려주고 <span class="keyword-highlight">현금지원 혜택</span>을 포함한 <span class="keyword-highlight">견적</span>을 받습니다.</li>
+        <li><span class="keyword-highlight">가입 신청 및 해피콜:</span> 상담을 통해 <span class="keyword-highlight">통신사</span>를 결정하고 가입 신청서를 작성합니다. 해피콜을 통해 본인 확인 및 최종 <span class="keyword-highlight">상품</span> 확인을 합니다.</li>
+        <li><span class="keyword-highlight">설치 일정 조율:</span> 이천 지역 <span class="keyword-highlight">설치 기사</span>의 방문 일정을 조율합니다. 주말이나 공휴일은 설치가 어려울 수 있으므로 평일 일정을 잡는 것이 좋습니다.</li>
+        <li><span class="keyword-highlight">설치 및 개통:</span> <span class="keyword-highlight">이천시</span> 설치 주소지에서 <span class="keyword-highlight">인터넷 설치</span>를 진행하고 속도를 테스트합니다.</li>
+      </ol>
+    </div>
+
+    <h3>이천 지역별 인터넷 설치 가이드</h3>
+    <ul>
+      <li><strong>이천시 신시가지 (증포동, 중리동, 안흥동):</strong> <span class="keyword-highlight">아파트 밀집 지역</span>으로 <span class="keyword-highlight">SKT, KT, LGU+</span> 3사 모두 <span class="keyword-highlight">기가인터넷</span> 설치가 원활하며 <span class="keyword-highlight">설치 소요 시간</span>도 빠릅니다.</li>
+      <li><strong>이천시 외곽 지역 (신둔면, 백사면, 호법면):</strong> <span class="keyword-highlight">빌라 및 단독주택</span>이 많아 <span class="keyword-highlight">광랜</span> 위주로 설치 가능 여부를 확인해야 합니다. 일부 지역은 <span class="keyword-highlight">인프라 구축</span>이 미흡할 수 있으므로 <span class="keyword-highlight">전문 업체</span> 상담이 필수입니다.</li>
+      <li><strong>부발읍, 장호원읍, 마장면:</strong> <span class="keyword-highlight">이천 SK하이닉스</span> 주변이나 산업단지 근처는 <span class="keyword-highlight">기업 인터넷</span> 수요가 많아 인프라가 잘 갖춰져 있습니다. <span class="keyword-highlight">사무실 인터넷</span> 가입 시에도 <span class="keyword-highlight">할인 혜택</span>을 받을 수 있습니다.</li>
+    </ul>
+  </section>
+
+  <section id="faq" class="faq">
+    <h2>자주 묻는 질문 (FAQ)</h2>
+    <div class="item">
+      <h3>Q1: 이천 인터넷 가입 시 통신사별 <span class="keyword-highlight">장단점</span>과 <span class="keyword-highlight">차이점</span>은 무엇인가요?</h3>
+      <div class="content">
+        <p>A: 통신사별 <span class="keyword-highlight">장단점</span>은 주로 <span class="keyword-highlight">휴대폰 결합 할인 혜택</span>과 <span class="keyword-highlight">IPTV 콘텐츠</span>, <span class="keyword-highlight">서비스 안정성</span>에서 나타납니다. SKT는 휴대폰 결합 할인율이 높고, KT는 <span class="keyword-highlight">이천</span> 지역 인프라 안정성이 뛰어나며, LGU+는 스마트홈 및 OTT 콘텐츠에 강점이 있습니다. <span class="keyword-highlight">내돈내산 후기</span>를 보면 사용 목적에 따라 <span class="keyword-highlight">추천</span> 통신사가 달라집니다.</p>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Q2: 이천에서 <span class="keyword-highlight">저렴한곳</span>을 찾으려면 어떻게 <span class="keyword-highlight">비교</span>해야 하나요?</h3>
+      <div class="content">
+        <p>A: <span class="keyword-highlight">이천 인터넷 가입</span>을 <span class="keyword-highlight">저렴한곳</span>에서 하려면, <span class="keyword-highlight">월 요금</span>뿐만 아니라 <span class="keyword-highlight">사은품</span>과 <span class="keyword-highlight">현금지원 금액</span>을 합산한 <span class="keyword-highlight">실질적인 비용</span>을 따져봐야 합니다. <span class="keyword-highlight">온라인 전문 업체</span> 여러 곳에 <span class="keyword-highlight">견적</span>을 받아 <span class="keyword-highlight">가격</span>을 <span class="keyword-highlight">비교</span>하는 것이 좋습니다. <span class="keyword-highlight">신규 가입</span> 혜택이 가장 좋은 시기를 노리는 것도 방법입니다.</p>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Q3: <span class="keyword-highlight">이천시</span> 외곽 지역(예: <span class="keyword-highlight">모가면, 설성면</span>)도 <span class="keyword-highlight">기가인터넷</span> 설치가 가능한가요?</h3>
+      <div class="content">
+        <p>A: <span class="keyword-highlight">이천시</span> 외곽 지역은 <span class="keyword-highlight">아파트</span>가 밀집된 <span class="keyword-highlight">중리동</span>이나 <span class="keyword-highlight">증포동</span>과 달리 <span class="keyword-highlight">기가인터넷</span> 설치가 어려울 수 있습니다. <span class="keyword-highlight">KT</span>는 상대적으로 커버리지가 넓지만, 정확한 <span class="keyword-highlight">설치 가능 여부</span>는 <span class="keyword-highlight">주소지</span>를 기반으로 확인해야 합니다. <span class="keyword-highlight">전문 업체</span>에 문의하시면 <span class="keyword-highlight">설치 불가 지역</span>인지 바로 알 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Q4: <span class="keyword-highlight">이천 인터넷 가입</span> 시 <span class="keyword-highlight">사은품</span>은 얼마나 받을 수 있나요?</h3>
+      <div class="content">
+        <p>A: <span class="keyword-highlight">사은품</span> 및 <span class="keyword-highlight">현금지원</span> 금액은 <span class="keyword-highlight">통신사</span>와 <span class="keyword-highlight">상품(인터넷 단독 vs. 결합 상품)</span>에 따라 <span class="keyword-highlight">차이점</span>이 있습니다. 일반적으로 <span class="keyword-highlight">기가인터넷 + IPTV</span> 결합 상품이 <span class="keyword-highlight">가장 많은 혜택</span>을 받을 수 있으며, <span class="keyword-highlight">신규 가입</span> 고객에게 최대 <span class="keyword-highlight">40만원 이상</span>의 <span class="keyword-highlight">현금지원</span>이 제공될 수 있습니다. <span class="keyword-highlight">전문 상담</span>을 통해 정확한 <span class="keyword-highlight">견적</span>을 받아보세요.</p>
+      </div>
+    </div>
+    <div class="item">
+      <h3>Q5: <span class="keyword-highlight">이천 인터넷</span> 가입 시 <span class="keyword-highlight">설치 비용</span>이 발생하나요?</h3>
+      <div class="content">
+        <p>A: <span class="keyword-highlight">이천 인터넷</span> 가입 시 기본 <span class="keyword-highlight">설치 비용</span>은 약 2만 원대이며, <span class="keyword-highlight">IPTV</span>를 함께 신청하면 별도 <span class="keyword-highlight">설치 비용</span>이 추가될 수 있습니다. 하지만 <span class="keyword-highlight">온라인 전문 대리점</span>에서는 <span class="keyword-highlight">신규 가입</span> 고객에게 <span class="keyword-highlight">설치비 면제 혜택</span>을 제공하는 경우가 많으므로 <span class="keyword-highlight">전문 상담</span> 시 문의해보세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>이천 인터넷 가입 <span class="keyword-highlight">견적 문의</span> 및 전문 상담</h2>
+    <p><span class="keyword-highlight">이천시</span> <span class="keyword-highlight">장호원읍, 부발읍, 마장면, 백사면, 신둔면, 호법면, 대월면, 모가면, 설성면</span> 등 <span class="keyword-highlight">이천</span> 전 지역 <span class="keyword-highlight">인터넷 설치</span> 가능 여부를 확인하고, <span class="keyword-highlight">최대 사은품</span> 및 <span class="keyword-highlight">현금지원 혜택</span>을 포함한 <span class="keyword-highlight">맞춤형 견적</span>을 받아보세요. 아래 양식을 작성하시면 신속하게 연락드리겠습니다.</p>
+    <form action="/submit-internet-quote" method="post" aria-label="이천 인터넷 가입 견적 문의 폼">
+      <div class="input-section">
+        <div class="input-group">
+          <label for="name">이름</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="input-group">
+          <label for="phoneNumber">연락처</label>
+          <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" placeholder="예: 010-1234-5678" required />
+        </div>
+        <div class="input-group">
+          <label for="address">설치 주소 (이천시 구체적 주소)</label>
+          <input type="text" id="address" name="address" placeholder="예: 경기도 이천시 증포동 XX아파트 X동 XXX호" required />
+        </div>
+        <div class="input-group">
+          <label for="provider">희망 통신사 (선택 사항)</label>
+          <select id="provider" name="provider">
+            <option value="" selected>통신사 비교 요청</option>
+            <option value="skt">SKT</option>
+            <option value="kt">KT</option>
+            <option value="lguplus">LGU+</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="productType">희망 상품</label>
+          <select id="productType" name="productType" required>
+            <option value="" disabled selected>선택하세요</option>
+            <option value="internet-only">인터넷 단독</option>
+            <option value="internet-tv">인터넷 + TV</option>
+            <option value="internet-tv-phone">인터넷 + TV + 전화</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="speed">희망 인터넷 속도</label>
+          <select id="speed" name="speed" required>
+            <option value="" disabled selected>선택하세요</option>
+            <option value="100m">광랜 (100Mbps)</option>
+            <option value="500m">기가라이트 (500Mbps)</option>
+            <option value="1g">기가인터넷 (1Gbps)</option>
+          </select>
+        </div>
+        <div class="input-group" style="flex-basis: 100%;">
+          <label for="additionalInfo">추가 문의 사항 (현금지원, 사은품 등)</label>
+          <textarea id="additionalInfo" name="additionalInfo" rows="4" placeholder="휴대폰 결합 여부, 원하는 사은품 종류, 설치 희망일 등 자세히 작성해 주시면 정확한 견적을 드립니다."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="cta-btn">무료 견적 요청하기</button>
+    </form>
+  </section>
+
+  <section id="external-resources">
+    <h2>신뢰할 수 있는 외부 참고자료 및 관련 기관</h2>
+    <ul>
+      <li><a href="https://www.kcc.go.kr" target="_blank" rel="noopener" class="external-link">방송통신위원회 - 통신 요금 및 정책 안내</a></li>
+      <li><a href="https://www.skbroadband.com" target="_blank" rel="noopener" class="external-link">SK브로드밴드 공식 홈페이지</a></li>
+      <li><a href="https://www.kt.com" target="_blank" rel="noopener" class="external-link">KT 공식 홈페이지</a></li>
+      <li><a href="https://www.uplus.co.kr" target="_blank" rel="noopener" class="external-link">LGU+ 공식 홈페이지</a></li>
+      <li><a href="https://www.kisa.or.kr" target="_blank" rel="noopener" class="external-link">한국인터넷진흥원 (KISA) - 인터넷 품질 측정</a></li>
+    </ul>
+  </section>
+
+
+  <!-- Chart.js 라이브러리 로드 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Chart.js initialization for internet price comparison
+    const ctx = document.getElementById('internetPriceChart').getContext('2d');
+    const internetPriceChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['100Mbps 광랜', '500Mbps 기가라이트', '1Gbps 기가인터넷'],
+        datasets: [{
+          label: '월 예상 요금 (원)',
+          data: [25000, 35000, 40000], // Example data for 2026 average price
+          backgroundColor: ['#3498db', '#2980b9', '#1f618d'],
+          borderRadius: 6,
+          borderWidth: 1,
+          borderColor: '#1c5980',
+          hoverBackgroundColor: '#1c5980'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 5000,
+              callback: value => value.toLocaleString() + '원'
+            },
+            title: {
+              display: true,
+              text: '월 요금 (원)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: '인터넷 속도'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: context => context.parsed.y.toLocaleString() + '원'
+            }
+          }
+        }
+      }
+    });
+  </script>
+  
